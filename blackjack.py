@@ -17,7 +17,7 @@ class CardManager:
             raise Exception("all cards drawn")
         else:
             return self.generate_card()
-    
+ 
     def draw_card(self, player):
         new_card = self.generate_card()
         self.cards.add(new_card)
@@ -28,6 +28,19 @@ class Player():
         self.name = name
         self.cards = []
 
+    def first_card(self):
+        if len(self.cards) > 0:
+            return self.cards[0] 
+        else:
+            return None
+            # raise Exception("No cards found")
+    
+    def calculate_hand_total(self, cards):
+        count = 0
+        for card in cards:
+            pass
+
+
 
 card_manager = CardManager()
 Bob = Player("Bob")
@@ -35,3 +48,5 @@ for i in range(2):
     card_manager.draw_card(Bob)
     print(card_manager.cards)
     print(Bob.cards)
+
+print(Bob.first_card())
