@@ -31,12 +31,12 @@ class Player():
 
     def first_card(self) -> Union[tuple, None]:
         if len(self.cards) > 0:
-            return self.cards[0] 
+            return self.cards[0]
         else:
             return None
             # raise Exception("No cards found")
 
-    def get_card_value(self, card) -> Union[list[int, int], int]:
+    def get_card_value(self, card: tuple[str, Union[list, int]]) -> Union[list[int, int], int]:
         number: Union[int, str] = card[0]
         if number == 'A':
             return [1, 11]
@@ -45,10 +45,20 @@ class Player():
         else:
             return number
     
-    def calculate_hand_total(self, cards):
-        count = 0
+    def calculate_hand_total(self, cards: list):
+        count = [0]
         for card in cards:
-            pass
+            value: Union[list[int, int], int] = self.get_card_value(card)
+            if type(value) == int:
+                count = list(map(lambda x: x + value, count))
+            else: #* 'A' returns [1,11]
+                new_count = []
+                for item in count:
+                    new_item = [item + 1, item + 11]
+                    new_count.extend(new_item)
+                new_count = list(dict.fromkeys(new_count)) #* remove duplicates from list
+                count = new_count
+        return count
 
 
 
@@ -59,4 +69,4 @@ for i in range(5):
     print(card_manager.cards)
     print(Bob.cards)
 
-print(Bob.first_card())
+print(Bob.calculate_hand_total(Bob.cards))
